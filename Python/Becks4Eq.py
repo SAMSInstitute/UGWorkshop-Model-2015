@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Solve Beck's system of ODEs
+Bifurcation diagrams for Beck's system
 Created on Wed Apr 29 15:12:24 2015
 
 @author: Christopher Strickland
@@ -9,7 +9,6 @@ from __future__ import division
 import numpy as np
 from scipy.integrate import ode
 import matplotlib.pyplot as plt
-import time
 
 ##### Variables go here #####
 N0 = 4.5e-5
