@@ -16,8 +16,9 @@ import matplotlib.pyplot as plt
 
 ##### Variables go here #####
 N0 = 4.5e-5
+#N0 = 4e-5
 
-D = 1.05
+D = .5
 STOC_D = False #turn on or off noisy D (Gamma noise)
 var_D = 0.5
 
@@ -25,10 +26,9 @@ OBS_NOISE = False #turn on or off observation noise
 
 
 #time points to solve at
-tpts = np.arange(0,1001)
+tpts = np.linspace(0,1000,8001)
 #initial values
 x0 = np.array([2.1e-7,4.56e-7,4.3e-5,N0])
-#x0 = np.array([2e-7,5e-7,4e-5,N0])
 
 #growth rates (1/sec)
 #values below are in 1/day; divide by 24*3600 to get seconds

@@ -14,11 +14,14 @@ import matplotlib.pyplot as plt
 
 ##### Variables go here #####
 N0 = 4.5e-5
-D = 1.10
+#N0 = 4e-5
+
+D = 0.5
 #time points to solve at
-tpts = np.arange(0,1001)
+tpts = np.linspace(0,1000,8001)
 #initial values
 x0 = np.array([2.1e-7,4.56e-7,4.3e-5,N0])
+#x0 = np.array([2e-4,5e-4,4e-2,N0])
 
 #growth rates (1/sec)
 #values below are in 1/day; divide by 24*3600 to get seconds
@@ -86,7 +89,7 @@ for t in tpts[1:]:
     u3.append(r.y[3])
     
 ##### Plot solution #####
-plt.figure(1)
+plt.figure()
 plt.subplot(221)
 plt.plot(tpts,u0)
 plt.title(r"Plot of $R$ vs. time")
