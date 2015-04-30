@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 ##### Variables go here #####
 N0 = 4.5e-5
 
-D = 1.10
+D = 1.05
 STOC_D = False #turn on or off noisy D (Gamma noise)
 var_D = 0.5
 
@@ -28,6 +28,7 @@ OBS_NOISE = False #turn on or off observation noise
 tpts = np.arange(0,1001)
 #initial values
 x0 = np.array([2.1e-7,4.56e-7,4.3e-5,N0])
+#x0 = np.array([2e-7,5e-7,4e-5,N0])
 
 #growth rates (1/sec)
 #values below are in 1/day; divide by 24*3600 to get seconds
@@ -100,7 +101,7 @@ for t in tpts[1:]:
     Nsol.append(r.y[3])
     
 ##### Plot solution #####
-plt.figure(1)
+plt.figure()
 plt.subplot(221)
 plt.plot(tpts,Rsol)
 plt.title(r"Plot of $R$ vs. time")
