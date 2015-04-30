@@ -18,8 +18,10 @@ import matplotlib.pyplot as plt
 N0 = 4.5e-5
 
 D = 1.10
-STOC_D = True #turn on or off noisy D (Gamma noise)
+STOC_D = False #turn on or off noisy D (Gamma noise)
 var_D = 0.5
+
+OBS_NOISE = False #turn on or off observation noise
 
 
 #time points to solve at
@@ -100,22 +102,22 @@ for t in tpts[1:]:
 ##### Plot solution #####
 plt.figure(1)
 plt.subplot(221)
-plt.plot(tpts,Rsol,'.',markersize=2)
+plt.plot(tpts,Rsol)
 plt.title(r"Plot of $R$ vs. time")
 plt.xlabel(r"$t$")
 plt.ylabel(r"$R$")
 plt.subplot(222)
-plt.plot(tpts,Csol,'.',markersize=2)
+plt.plot(tpts,Csol)
 plt.title(r"Plot of $C$ vs. time")
 plt.xlabel(r"$t$")
 plt.ylabel(r"$C$")
 plt.subplot(223)
-plt.plot(tpts,Psol,'.',markersize=2)
+plt.plot(tpts,Psol)
 plt.title(r"Plot of $P$ vs. time")
 plt.xlabel(r"$t$")
 plt.ylabel(r"$P$")
 plt.subplot(224)
-plt.plot(tpts,Nsol,'.',markersize=2)
+plt.plot(tpts,Nsol)
 plt.title(r"Plot of $N$ vs. time")
 plt.xlabel(r"$t$")
 plt.ylabel(r"$N$")
