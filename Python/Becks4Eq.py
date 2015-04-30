@@ -7,13 +7,13 @@ Created on Wed Apr 29 15:12:24 2015
 """
 from __future__ import division
 import numpy as np
-import scipy.integrate as spint
+from scipy.integrate import ode
 import matplotlib.pyplot as plt
 import time
 
 ##### Variables go here #####
 N0 = 4.5e-5
-tpts = np.concatenate((np.array([0]),np.linspace(7000,7500,501)))
+tpts = np.linspace(7000,7500,501)
 x0 = np.array([2.1e-7,4.56e-7,4.3e-5,4.5e-5])
 
 #growth rates (1/sec)
@@ -47,7 +47,7 @@ ynr = 0.1
 ync = 0.1    
 
 #ODE function
-def becks4Eq(x,t,N0,D):
+def becks4Eq(t,x,N0,D):
     dx = np.zeros(4)
     
     #ODEs
@@ -67,11 +67,19 @@ def becks4Eq(x,t,N0,D):
 
 ##### Solve procedure goes here #####
 for D in np.arange(0.05,2.01,0.01):
-    Usol = spint.odeint(becks4Eq,x0,tpts,(N0,D))
+    u0 = []
+    u1 = []
+    r = ode(becks4Eq).set_integrator('dopri5',nsteps=100000,verbosity=1)
+    r.set_initial_value(x0,0).set_f_params(N0,D)
+    for t in tpts:
+        r.integrate(t)
+        assert(r.successful())
+        u0.append(r.y[0])
+        u1.append(r.y[1])
     plt.figure(1)
     #plt.rc('text', usetex=True)
     plt.hold(True)
-    plt.plot(D*np.ones(len(tpts)-1),Usol[1:,0],marker='.',markersize=2)
+    plt.plot(D*np.ones(len(tpts)),u0,marker='.',markersize=2)
     plt.title(r"Bifurcation Diagram for $R$ vs $D$")
     plt.xlabel(r"Values for $D$")
     plt.ylabel(r"Rod Species $R$")
@@ -79,7 +87,7 @@ for D in np.arange(0.05,2.01,0.01):
     plt.figure(2)
     #plt.rc('text', usetex=True)
     plt.hold(True)
-    plt.plot(D*np.ones(len(tpts)-1),Usol[1:,1],marker='.',markersize=2)
+    plt.plot(D*np.ones(len(tpts)),u1,marker='.',markersize=2)
     plt.title(r"Bifurcation Diagram for $C$ vs $D$")
     plt.xlabel(r"Values for $D$")
     plt.ylabel(r"Cocci Species $C$")
