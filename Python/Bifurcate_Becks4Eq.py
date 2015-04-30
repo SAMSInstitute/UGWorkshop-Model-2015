@@ -64,7 +64,7 @@ def becks4Eq(t,x,N0,D):
     
     return dx
 
-##### Solve procedure goes here #####
+##### Solve and plot procedure goes here #####
 for D in np.arange(0.05,2.01,0.01):
     u0 = []
     u1 = []
