@@ -5,11 +5,11 @@ Created on Wed Apr 29 15:12:24 2015
 
 @author: Christopher Strickland
 """
+from __future__ import division
 import numpy as np
-import scipy as sp
+import scipy.integrate as spint
 import matplotlib.pyplot as plt
 import time
-from __future__ import division
 
 ##### Variables go here #####
 N0 = 4.5e-5
@@ -66,27 +66,23 @@ def becks4Eq(x,t,N0,D):
     return dx
 
 ##### Solve procedure goes here #####
-for D in xrange(0.05,2.01,0.01):
-    Usol = sp.integrate.odeint(becks4Eq,x0,tpts,(N0,D))
+for D in np.arange(0.05,2.01,0.01):
+    Usol = spint.odeint(becks4Eq,x0,tpts,(N0,D))
     plt.figure(1)
-    plt.rc('text', usetex=True)
+    #plt.rc('text', usetex=True)
     plt.hold(True)
     plt.plot(D*np.ones(len(tpts)-1),Usol[1:,0],marker='.',markersize=2)
     plt.title(r"Bifurcation Diagram for $R$ vs $D$")
     plt.xlabel(r"Values for $D$")
     plt.ylabel(r"Rod Species $R$")
-    plt.draw()
     
     plt.figure(2)
-    plt.rc('text', usetex=True)
+    #plt.rc('text', usetex=True)
     plt.hold(True)
     plt.plot(D*np.ones(len(tpts)-1),Usol[1:,1],marker='.',markersize=2)
     plt.title(r"Bifurcation Diagram for $C$ vs $D$")
     plt.xlabel(r"Values for $D$")
     plt.ylabel(r"Cocci Species $C$")
-    plt.draw()
     
     print(D)
-    plt.sleep(0.05)
-    
-    
+plt.show()
