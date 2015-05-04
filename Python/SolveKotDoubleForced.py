@@ -25,6 +25,9 @@ x0 = np.array([1,1,1])
 
 #Dilution rate
 D = 0.1
+#Most of Kot's stuff is based on D=0.1
+#If you set epsilon=0, there is no forcing. In this case,
+#   D=0.15 gives nice non-extinction steady states
 
 #Si, mg/l
 si = 115.0
@@ -49,15 +52,22 @@ a = k1/si
 B = mu2/D
 b = k2/y1/si
 
-#Epsilon = 0.6 gives chaos
+#For standard choice of other parameters:
+#Epsilon = 0.6 gives chaos. >0.6 is really nice
+#0.4 is cool. Several interacting oscillations.
+#0.3 is two oscillations
+#0.1 and 0.0 - limit cycle
 epsilon = 0.6
 
-T = 100.0
+#T = 100.0
+T = 24
 
-#chaotic dynamics
-omega = 5.0*np.pi/6.0
+#chaotic dynamics, Fig. 6 when epsilon = 0.6
+#omega = 5.0*np.pi/6.0 #T is not used here. This is equivalent to T=24.
+
 #other choices?
-#omega = 2.*np.pi/D/T
+omega = 2.*np.pi/D/T #nifty limit cycle w/ epsilon = 0.6, T=100!
+                     #epsilon = 0.1 gives wave envelopes, T=100!
 #omega = 4.0*np.pi
 
 ##### ODE function #####

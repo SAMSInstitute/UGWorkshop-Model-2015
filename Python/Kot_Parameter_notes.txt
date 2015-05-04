@@ -1,0 +1,79 @@
+The key paramters to fiddle with are:
+D (dilution rate)
+epsilon (amount of external forcing)
+T>0 (period of external forcing)
+
+omega is a combination of D and T when epsilon>0.
+it's the angular frequency of the forcing in rescaled time.
+specifically, omega = 2*pi/(T*D)
+
+---------- Specific paramter choices to look at ----------
+D = 0.15
+epsilon = 0
+(it doesn't matter what omega is)
+
+This is an example of no seasonal forcing.
+It yields non-zero fixed values for all variables.
+
+----------
+D = 0.1
+epsilon = 0
+(it doesn't matter what omega is)
+
+This is an example of no seasonal forcing.
+It yields a simple oscillation in all variables
+(limit cycle).
+
+----------
+D = 0.1
+epsilon = 0.1
+T = 24 (or equivalently, omega = 5.0*pi/6.0)
+
+This has seasonal forcing, but still yields a simple oscillation in all variables
+(limit cycle)
+
+----------
+D = 0.1
+epsilon = 0.3
+T = 24 (or equivalently, omega = 5.0*pi/6.0)
+
+Moderate seasonal forcing causes the cycle to double.
+Solutions go back and forth between higher and lower amplitude cycle peaks
+	in a regular, cyclical fashion.
+(oscillation between two limit cycles)
+
+----------
+D = 0.1
+epsilon = 0.4
+T = 24 (or equivalently, omega = 5.0*pi/6.0)
+
+More seasonal forcing causes the cycle to split a few more times.
+(oscillation between six limit cycles)
+
+----------
+D = 0.1
+epsilon = 0.6 or 0.8 or 1.0
+T = 24 (or equivalently, omega = 5.0*pi/6.0)
+
+Strong seasonal forcing. Pretty good looking chaotic solution.
+You can get chaos for any(?) choice of epsilon >= 0.6, leaving the other parameters the same.
+
+----------
+D = 0.1
+epsilon = 0.6
+T = 100 (omega = 2*pi/D/T)
+
+Two variables are a simple oscillation, the other is an oscillation with a hitch.
+A limit cycle with a hitch!
+epsilon 0.2-0.6:
+When epsilon=0.2 you get the two-cycle effect. The smaller amplitude
+oscillation decreases in amplitude as you increase epsilon. At epsilon=0.4, there's a
+"hitch" in all of the variables' oscillations. The secondary cycle dies out in two of
+the variables by the time you get to epsilon=0.6.
+
+----------
+D = 0.1
+epsilon = 0.1
+T = 100 (omega = 2*pi/D/T)
+
+Interacting oscillatory modes in all variables. Wave envelopes!
