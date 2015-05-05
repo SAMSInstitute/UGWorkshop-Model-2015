@@ -12,6 +12,7 @@ Created on Mon May 04 10:01:39 2015
 from __future__ import division
 import numpy as np
 import scipy as sp
+from scipy import stats
 from scipy.integrate import ode
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
@@ -30,10 +31,32 @@ obs_mu = np.array([0,0,0]) #x,y,and z variables
 obs_sig2 = np.array([.01,.01,.01])
 
 #Dilution rate
-D = 0.15
+D = 0.1
 #Most of Kot's stuff is based on D=0.1
 #If you set epsilon=0, there is no forcing. In this case,
 #   D=0.15 gives nice non-extinction steady states
+
+#For standard choice of other parameters:
+#Epsilon = 0.6 gives chaos. >0.6 is really nice
+#0.4 is cool. Several interacting oscillations.
+#0.3 is two oscillations
+#0.1 and 0.0 - limit cycle
+epsilon = 0.0
+STOC_EPS = False #turn on and off stochastic epsilon
+if STOC_EPS:
+    #create the random variable you want for epsilon here. E.g.
+    #stats.truncnorm(min,max,mu,sig2)
+    #stats.gamma(k,loc=0,scale=theta)
+    eps_rv = stats.truncnorm(0,3,epsilon,0.15)
+
+#T = 100.0
+T = 24
+
+#chaotic dynamics, Fig. 6 when epsilon = 0.6
+#omega = 5.0*np.pi/6.0 #T is not used here. This is equivalent to T=24.
+omega = 2.*np.pi/D/T #nifty limit cycle w/ epsilon = 0.6, T=100!
+                     #epsilon = 0.1 gives wave envelopes, T=100!
+#omega = 4.0*np.pi
 
 #Si, mg/l
 si = 115.0
@@ -58,26 +81,8 @@ a = k1/si
 B = mu2/D
 b = k2/y1/si
 
-#For standard choice of other parameters:
-#Epsilon = 0.6 gives chaos. >0.6 is really nice
-#0.4 is cool. Several interacting oscillations.
-#0.3 is two oscillations
-#0.1 and 0.0 - limit cycle
-epsilon = 0.0
-
-#T = 100.0
-T = 24
-
-#chaotic dynamics, Fig. 6 when epsilon = 0.6
-#omega = 5.0*np.pi/6.0 #T is not used here. This is equivalent to T=24.
-
-#other choices?
-omega = 2.*np.pi/D/T #nifty limit cycle w/ epsilon = 0.6, T=100!
-                     #epsilon = 0.1 gives wave envelopes, T=100!
-#omega = 4.0*np.pi
-
 ##### ODE function #####
-def KotODEs(t,x):
+def KotODEs(t,x,epsilon):
     dx = np.zeros(3)
     
     dx[0] = 1 + epsilon*np.sin(omega*t) - x[0] - A*x[0]*x[1]/(a+x[0])
@@ -92,12 +97,10 @@ Xsol.append(x0[0])
 Ysol.append(x0[1])
 Zsol.append(x0[2])
 r = ode(KotODEs).set_integrator('dopri5',nsteps=100000,verbosity=1)
-r.set_initial_value(x0,0)
+r.set_initial_value(x0,0).set_f_params(epsilon)
 for t in tpts[1:]:
-#    if STOC_D:
-#        D_t = sp.random.gamma(D**2/var_D,var_D/D)
-#    else:
-#        D_t = D
+    if STOC_EPS:
+        r.set_f_params(eps_rv.rvs())
     r.integrate(t)
     assert(r.successful())
     if OBS_NOISE:
