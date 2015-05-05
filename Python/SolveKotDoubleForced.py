@@ -23,8 +23,14 @@ tpts = np.linspace(0,500,4001)
 #initial values
 x0 = np.array([1,1,1])
 
+#Observation noise
+OBS_NOISE = False #turn on or off observation noise
+#Assume noise is gaussian
+obs_mu = np.array([0,0,0]) #x,y,and z variables
+obs_sig2 = np.array([.01,.01,.01])
+
 #Dilution rate
-D = 0.1
+D = 0.15
 #Most of Kot's stuff is based on D=0.1
 #If you set epsilon=0, there is no forcing. In this case,
 #   D=0.15 gives nice non-extinction steady states
@@ -57,7 +63,7 @@ b = k2/y1/si
 #0.4 is cool. Several interacting oscillations.
 #0.3 is two oscillations
 #0.1 and 0.0 - limit cycle
-epsilon = 0.6
+epsilon = 0.0
 
 #T = 100.0
 T = 24
@@ -94,9 +100,14 @@ for t in tpts[1:]:
 #        D_t = D
     r.integrate(t)
     assert(r.successful())
-    Xsol.append(r.y[0])
-    Ysol.append(r.y[1])
-    Zsol.append(r.y[2])
+    if OBS_NOISE:
+        Xsol.append(max(r.y[0] + sp.random.normal(obs_mu[0],obs_sig2[0]),0))
+        Ysol.append(max(r.y[1] + sp.random.normal(obs_mu[1],obs_sig2[1]),0))
+        Zsol.append(max(r.y[2] + sp.random.normal(obs_mu[2],obs_sig2[2]),0))
+    else:
+        Xsol.append(r.y[0])
+        Ysol.append(r.y[1])
+        Zsol.append(r.y[2])
     
 ##### Plot solution #####
 fig = plt.figure()
