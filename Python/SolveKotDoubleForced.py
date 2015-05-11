@@ -134,7 +134,11 @@ for t in tpts:
         Xsol.append(r.y[0])
         Ysol.append(r.y[1])
         Zsol.append(r.y[2])
-    
+
+##### Output data #####
+#uncomment for data generation
+#np.savetxt('data.csv', np.asarray([Xsol, Ysol, Zsol]), delimiter=",")
+        
 ##### Plot solution #####
 fig = plt.figure()
 plt.subplot(221)
