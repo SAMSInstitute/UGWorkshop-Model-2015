@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 ##### Parameters go here #####
 
 #time points to solve at
-tpts = np.linspace(0,500,4001)
+tpts = np.linspace(100,110,501)
 #initial values
 x0 = np.array([1,1,1])
 
@@ -137,7 +137,7 @@ for t in tpts:
 
 ##### Output data #####
 #uncomment for data generation
-#np.savetxt('data.csv', np.asarray([Xsol, Ysol, Zsol]), delimiter=",")
+np.savetxt('data.csv', np.asarray([tpts, Xsol, Ysol, Zsol]).T, delimiter=",")
         
 ##### Plot solution #####
 fig = plt.figure()
