@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 ##### Parameters go here #####
 
 #time points to solve at
-tpts = np.linspace(100,110,501)
+tpts = np.linspace(0,151,1001) #100,110,... for no transients
 #initial values
 x0 = np.array([1,1,1])
 
@@ -37,16 +37,11 @@ obs_sig2 = np.array([.05,.05,.05])
 #Dilution rate
 D = 0.1
 #Most of Kot's stuff is based on D=0.1
-#If you set epsilon=0, there is no forcing. In this case,
-#   D=0.15 gives nice non-extinction steady states
+#If you set epsilon=0, there is no forcing.
 
 ####################
 
-#For D=0.1:
-#Epsilon = 0.6 gives chaos. >0.6 is really nice
-#0.4 is cool. Several interacting oscillations.
-#0.3 is two oscillations
-#0.1 and 0.0 - limit cycle
+#Forcing amplitude
 epsilon = 0.2
 STOC_EPS = False #turn on and off stochastic epsilon
 if STOC_EPS:
@@ -56,15 +51,12 @@ if STOC_EPS:
     eps_rv = stats.truncnorm(0,3,epsilon,0.15)
 
 ####################
-#Note that this section does nothing if epsilon=0
-#T = 100.0
-T = 24
+#T and omega control the period of the forcing
+#(Note that this section does nothing if epsilon=0)
+T = 24 #T = 100.0
 
-#chaotic dynamics, Fig. 6 when epsilon = 0.6
+omega = 2.*np.pi/D/T
 #omega = 5.0*np.pi/6.0 #T is not used here. This is equivalent to T=24.
-omega = 2.*np.pi/D/T #nifty limit cycle w/ epsilon = 0.6, T=100!
-                     #epsilon = 0.1 gives wave envelopes, T=100!
-#omega = 4.0*np.pi
 
 STOC_T = False #turn on and off stochastic forcing period
 if STOC_T:
