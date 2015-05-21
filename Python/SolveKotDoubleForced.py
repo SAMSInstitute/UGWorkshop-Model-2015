@@ -30,12 +30,12 @@ x0 = np.array([1,1,1])
 OBS_NOISE = False #turn on or off observation noise
 #Assume noise is gaussian
 obs_mu = np.array([0,0,0]) #x,y,and z variables
-obs_sig2 = np.array([.01,.01,.01])
+obs_sig2 = np.array([.05,.05,.05])
 
 ####################
 
 #Dilution rate
-D = 0.15
+D = 0.1
 #Most of Kot's stuff is based on D=0.1
 #If you set epsilon=0, there is no forcing. In this case,
 #   D=0.15 gives nice non-extinction steady states
@@ -47,7 +47,7 @@ D = 0.15
 #0.4 is cool. Several interacting oscillations.
 #0.3 is two oscillations
 #0.1 and 0.0 - limit cycle
-epsilon = 0.0
+epsilon = 0.2
 STOC_EPS = False #turn on and off stochastic epsilon
 if STOC_EPS:
     #create the random variable you want for epsilon here. E.g.
@@ -137,7 +137,7 @@ for t in tpts:
 
 ##### Output data #####
 #uncomment for data generation
-np.savetxt('data.csv', np.asarray([tpts, Xsol, Ysol, Zsol]).T, delimiter=",")
+#np.savetxt('data.csv', np.asarray([tpts, Xsol, Ysol, Zsol]).T, delimiter=",")
         
 ##### Plot solution #####
 fig = plt.figure()
